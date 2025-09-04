@@ -22,7 +22,7 @@ export const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: "1",
-      content: "Hello! I'm your AI assistant. How can I help you today?",
+      content: "Hello! I'm your friendly AI assistant. I'm here to help you with questions, have a chat, brainstorm ideas, or just keep you company. What's on your mind today? 😊",
       isUser: false,
       timestamp: new Date()
     }
@@ -43,29 +43,61 @@ export const ChatInterface = ({ onBack }: ChatInterfaceProps) => {
   }, [messages]);
 
   const generateResponse = (userMessage: string): string => {
-    // Simple response generation for demo
-    const responses = [
-      "That's an interesting question! Let me think about that...",
-      "I understand what you're asking. Here's my perspective...",
-      "Great point! I'd be happy to help you with that.",
-      "That's a complex topic. From what I know...",
-      "I see what you mean. Let me explain...",
+    const message = userMessage.toLowerCase();
+    
+    // Greeting responses
+    if (message.includes("hello") || message.includes("hi") || message.includes("hey")) {
+      const greetings = [
+        "Hello there! 👋 I'm excited to chat with you today. What's on your mind?",
+        "Hi! Great to see you here. I'm ready to help with whatever you need - questions, conversations, or just a friendly chat!",
+        "Hey! 😊 Thanks for stopping by. I'm here and happy to assist you with anything you'd like to discuss."
+      ];
+      return greetings[Math.floor(Math.random() * greetings.length)];
+    }
+
+    // How are you responses
+    if (message.includes("how are you") || message.includes("how do you do")) {
+      return "I'm doing great, thank you for asking! 😊 I'm here, energized, and ready to help. How are you doing today?";
+    }
+
+    // Weather queries
+    if (message.includes("weather")) {
+      return "I don't have access to real-time weather data, but I'd love to help you think about weather-related topics! You might want to check your local weather app for current conditions. Is there something specific about weather you're curious about?";
+    }
+
+    // Help requests
+    if (message.includes("help") || message.includes("assist") || message.includes("support")) {
+      return "I'm absolutely here to help! 🤝 I can assist with answering questions, explaining concepts, brainstorming ideas, having conversations, or just being a friendly companion. What would you like to explore together?";
+    }
+
+    // Thank you responses
+    if (message.includes("thank") || message.includes("thanks")) {
+      return "You're very welcome! 😊 I'm happy I could help. Is there anything else you'd like to discuss or explore?";
+    }
+
+    // Questions about the AI
+    if (message.includes("what are you") || message.includes("who are you")) {
+      return "I'm your friendly AI assistant! Think of me as a helpful companion who's here to chat, answer questions, help you think through problems, or just have interesting conversations. I aim to be helpful, harmless, and honest in all our interactions. What would you like to know about me?";
+    }
+
+    // Capabilities questions
+    if (message.includes("what can you do") || message.includes("capabilities")) {
+      return "I can help with lots of things! 🌟 I can answer questions, explain complex topics, help with creative writing, brainstorm solutions, have philosophical discussions, assist with learning, or just chat about whatever interests you. I'm here to be genuinely helpful. What sounds interesting to you?";
+    }
+
+    // Conversation starters and general responses
+    const thoughtfulResponses = [
+      "That's a fascinating topic! I'd love to dive deeper into that with you. What aspects interest you most?",
+      "Interesting perspective! I enjoy exploring ideas like this. Tell me more about your thoughts on this.",
+      "That's something I find really engaging to discuss. What drew you to thinking about this?",
+      "Great question! Let me share some thoughts on that, and I'd love to hear your perspective too.",
+      "I appreciate you bringing this up! It's the kind of topic that can lead to really meaningful conversations.",
+      "That's wonderful to explore! I think there are several interesting angles we could look at this from.",
+      "I'm genuinely curious about your take on this! What's your experience been with this kind of thing?",
+      "That strikes me as really important to think about. What's been on your mind about this lately?",
     ];
     
-    if (userMessage.toLowerCase().includes("hello") || userMessage.toLowerCase().includes("hi")) {
-      return "Hello! It's great to chat with you. What would you like to discuss?";
-    }
-    
-    if (userMessage.toLowerCase().includes("weather")) {
-      return "I don't have access to current weather data, but I'd recommend checking your local weather app or website for the most accurate forecast.";
-    }
-    
-    if (userMessage.toLowerCase().includes("help")) {
-      return "I'm here to help! You can ask me about various topics, have a conversation, or just chat. What specifically would you like assistance with?";
-    }
-    
-    return responses[Math.floor(Math.random() * responses.length)] + " " + 
-           "Is there anything specific about this topic you'd like to explore further?";
+    return thoughtfulResponses[Math.floor(Math.random() * thoughtfulResponses.length)];
   };
 
   const handleSend = async () => {
